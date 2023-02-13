@@ -1,0 +1,72 @@
+@use 'styles/mixins';
+
+.scrollTableBody {
+	overflow-x: auto;
+	margin-top: 0px;
+	margin-bottom: 2px;
+}
+.scrollTable table {
+	table-layout: fixed;
+	border: none;
+}
+
+.tableThead {
+    width: 210px;
+    background-color: var(--second-background-color);
+    border-collapse: collapse;
+    border-radius: 30px 30px 0px 0px;
+}
+.tableBottom {
+    width: 210px;
+    background-color: var(--second-background-color);
+    border-collapse: collapse;
+}
+.table {
+    width: 210px;
+    height: 280px;
+    background-color: var(--second-background-color);
+}
+
+.item {
+    height: 40px;
+    border-bottom: 2px solid var(--background-color);
+    background: var(--second-background-color);
+}
+
+.tbody,
+.thead .tr {
+    display: block;
+}
+
+.tbody {
+    height: 330px;
+}
+.thead .th {
+    border-bottom: 2px solid var(--background-color);
+}
+
+.tbody .td,
+.thead .th {
+    height: 40px;
+    width: 215px;
+}
+
+.tbody .td {
+    padding-left: 10px;
+    text-align: left;
+}
+.scrollTable tbody tr:nth-child(even){
+	background: #ffffff;
+}
+
+::-webkit-scrollbar {
+	width: 5px;
+} 
+::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 5px rgba(0,0,0,0.3); 
+} 
+::-webkit-scrollbar-thumb {
+    background-color: var(--accent-color);
+    width: 5px;
+    border-radius: 5px;
+}
