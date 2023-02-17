@@ -32,7 +32,23 @@ export const axiosGetIncomeTransByDate = async userData => {
 
 export const axiosGetChartData = async userData => {
   const { data } = await instance.post(
-    'api/transitions/report/category/expenses/dateil',
+    'api/transitions/report/category/detail',
+    userData
+  );
+  return data;
+};
+
+export const axiosGetReportBalance = async userData => {
+  const { data } = await instance.post(
+    'api/transitions/report/category',
+    userData
+  );
+  return data;
+};
+
+export const axiosGetSliderReportData = async userData => {
+  const { data } = await instance.post(
+    'api/transitions/report/category/data',
     userData
   );
   return data;

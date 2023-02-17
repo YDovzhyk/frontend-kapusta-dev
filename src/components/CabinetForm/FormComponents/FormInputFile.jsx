@@ -1,9 +1,8 @@
-import s from './FormInputFile.scss';
+import s from './FormInputFile.module.scss';
 
-export default function FormInputFile({ register }) {
-
-  return <div>
-    {/* <button className={s.btn} onClick={document.getElementById('j1_64')}>Find your file</button> */}
-    <input type="file" accept="image/png, image/jpeg" id="j1_64" className={s.inputPart} {...register('avatar')} />
-  </div>
+export default function FormInputFile({register}) {
+  return <div className={s.box}>
+      <label htmlFor="imageUpload" className={s.label}>Choose file</label>
+      <input type="file" id="imageUpload" accept="image/png, image/jpeg" style={{display:'none'}} {...register('avatar')} />
+    </div>
 }

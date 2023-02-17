@@ -1,9 +1,9 @@
-export default function TechniqueIcon({ height }) {
+export default function TechniqueIcon({ width, height, style }) {
   return (
     <svg
       height={height}
       viewBox="0 0 56 56"
-      style={{ zIndex: 1 }}
+      style={{ fill: style, zIndex: 1 }}
       xmlns="http://www.w3.org/2000/svg"
     >
       <path d="M37.99 16.97a1.093 1.093 0 1 0 0 2.186 1.093 1.093 0 0 0 0-2.187ZM18.117 36.842a1.093 1.093 0 1 0 0 2.187 1.093 1.093 0 0 0 0-2.187Z" />

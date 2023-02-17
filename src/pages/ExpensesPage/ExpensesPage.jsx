@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-import { getCurrentDate } from 'redux/transaction/transaction-selectors';
+import { getCurrentDate, isLoading } from 'redux/transaction/transaction-selectors';
 import { getExpensesTransByDate } from 'redux/transaction/transaction-operations';
 
 import Section from 'components/layout/Section/Section';
@@ -19,6 +19,7 @@ import SlideWindow from 'components/SlideWindow/SlideWindow.jsx';
 import FormAddTransaction from 'components/FormAddTransaction/FormAddTransaction.jsx';
 import TransactionTable from 'components/TransactionTable/TransactionTable';
 import SummaryTable from 'components/SummaryTable/SummaryTable';
+import Loader from 'components/ui/Loader/Loader';
 
 import KapustaTwoIcon from 'components/icons/KapustaTwo/KapustaTwo';
 import KapustaManyIcon from 'components/icons/KapustaMany/KapustaMany';
@@ -33,6 +34,7 @@ export default function ExpensesPage() {
 
   const dispatch = useDispatch();
   const currentDate = useSelector(getCurrentDate);
+  const loader = useSelector(isLoading);
 
   useEffect(() => {
     if (currentDate === '') {
@@ -45,6 +47,7 @@ export default function ExpensesPage() {
     <>
       {isMobile && (
         <>
+          {loader &&<Loader/>}
           <Section sectionClass="sectionMarg">
             <ButtonBack text="Main page" width="18" height="12" to="/" />
             <div className={s.overleyTab}>
@@ -65,6 +68,7 @@ export default function ExpensesPage() {
       {isTabletMin && isTabletMax && (
         <Section sectionClass="sectionMarg">
           <div className={s.overleyTab}>
+            {loader &&<Loader/>}
             <LinkReport />
             <FormAddBalance />
           </div>
@@ -83,6 +87,7 @@ export default function ExpensesPage() {
       {isDesktop && (
         <Section sectionClass="sectionMarg">
           <div className={s.overleyTab}>
+            {loader &&<Loader/>}
             <LinkReport />
             <FormAddBalance />
           </div>

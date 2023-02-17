@@ -1,7 +1,9 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-import { getBalance } from 'redux/transaction/transaction-selectors';
+import { getCurrentDate, getBalance, isLoading } from 'redux/transaction/transaction-selectors';
+import { getReportBalance, userGetBalance, getSliderReport } from 'redux/transaction/transaction-operations';
 
 import Section from 'components/layout/Section/Section';
 
@@ -11,6 +13,7 @@ import Text from 'components/ui/Text/Text';
 import Calendar from 'components/Calendar/Calendar';
 import BalanceChart from 'components/BalanceChart/BalanceChart';
 import SliderReport from 'components/SliderReport/SliderReport';
+import Loader from 'components/ui/Loader/Loader';
 
 import BarChart from 'components/BarChart/BarChart';
 
@@ -22,7 +25,21 @@ export default function ReportPage() {
   const isTabletMax = useMediaQuery('(max-width: 1279.98px)');
   const isDesktop = useMediaQuery('(min-width: 1280px)');
 
+  const dispatch = useDispatch();
+  const currentDate = useSelector(getCurrentDate);
+
+  useEffect(() => {
+    if (currentDate === '') {
+      return;
+    }
+    dispatch(getReportBalance({ reqDate: currentDate }));
+    dispatch(userGetBalance());
+    dispatch(getSliderReport({ reqDate: currentDate }));
+
+  }, [dispatch, currentDate]);
+
   const balance = useSelector(getBalance);
+  const loader = useSelector(isLoading);
 
   const newStyleBalance = balance + ' UAH';
 
@@ -30,6 +47,7 @@ export default function ReportPage() {
     <Section sectionClass="sectionMarg">
       {isMobile && (
         <>
+          {loader &&<Loader/>}
           <ButtonBack text="Main page" width="18" height="12" to="/" />
           <Text text="Current period:" textClass="textReport" />
           <Calendar dateFormat="MMMM yyyy" showMonthYearPicker={true} />
@@ -37,7 +55,6 @@ export default function ReportPage() {
           <Text text={newStyleBalance} textClass="textBalanceDisplay" />
           <BalanceChart />
           <SliderReport />
-
           <BarChart />
         </>
       )}
@@ -45,6 +62,7 @@ export default function ReportPage() {
       {isTabletMin && isTabletMax && (
         <>
           <div className={s.overlay}>
+            {loader &&<Loader/>}
             <ButtonBack text="Main page" width="18" height="12" to="/" />
             <div className={s.overlayBalance}>
               <Text text="Balance:" textClass="textBalance" />
@@ -58,7 +76,6 @@ export default function ReportPage() {
 
           <BalanceChart />
           <SliderReport />
-
           <BarChart />
         </>
       )}
@@ -66,6 +83,7 @@ export default function ReportPage() {
       {isDesktop && (
         <>
           <div className={s.overlay}>
+            {loader &&<Loader/>}
             <ButtonBack text="Main page" width="18" height="12" to="/" />
             <div className={s.overlayBalance}>
               <Text text="Balance:" textClass="textBalance" />
@@ -79,7 +97,6 @@ export default function ReportPage() {
 
           <BalanceChart />
           <SliderReport />
-
           <BarChart />
         </>
       )}

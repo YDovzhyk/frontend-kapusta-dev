@@ -2,12 +2,15 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import {
   userAddBalance,
+  userGetBalance,
   getTransactionsByMonth,
   addTransaction,
   deleteTransaction,
   getExpensesTransByDate,
   getIncomeTransByDate,
   getChartData,
+  getReportBalance,
+  getSliderReport,
 } from './transaction-operations';
 
 const initialState = {
@@ -20,6 +23,8 @@ const initialState = {
   error: null,
   calendarDate: null,
   chartData: [],
+  reportBalance: [{expenses: 0}, {income: 0}],
+  sliderReportData: [{income: [{}]}, {expenses: [{}]}],
 };
 
 const transactions = createSlice({
@@ -31,6 +36,9 @@ const transactions = createSlice({
     },
     addCalendarDate: (state, { payload }) => {
       state.calendarDate = payload;
+    },
+    addCategoryName: (state, { payload }) => {
+      state.categoryName = payload;
     },
   },
   extraReducers: builder => {
@@ -45,6 +53,21 @@ const transactions = createSlice({
         state.loading = false;
       })
       .addCase(userAddBalance.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload.data.message;
+      });
+
+      // User get balance
+      builder
+      .addCase(userGetBalance.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(userGetBalance.fulfilled, (state, { payload }) => {
+        state.balance = payload.balance;
+        state.loading = false;
+      })
+      .addCase(userGetBalance.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload.data.message;
       });
@@ -146,6 +169,36 @@ const transactions = createSlice({
         state.loading = false;
         state.error = payload.data.message;
       });
+
+      // Get report balance data
+      builder
+      .addCase(getReportBalance.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getReportBalance.fulfilled, (state, { payload }) => {
+        state.reportBalance = payload;
+        state.loading = false;
+      })
+      .addCase(getReportBalance.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload.data.message;
+      });
+
+      // Get slider report data
+      builder
+      .addCase(getSliderReport.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getSliderReport.fulfilled, (state, { payload }) => {
+        state.sliderReportData = payload;
+        state.loading = false;
+      })
+      .addCase(getSliderReport.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload.data.message;
+      });
   },
 });
 
@@ -153,3 +206,4 @@ export default transactions.reducer;
 
 export const { addDate } = transactions.actions;
 export const { addCalendarDate } = transactions.actions;
+export const { addCategoryName } = transactions.actions;

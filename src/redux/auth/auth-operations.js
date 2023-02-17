@@ -11,7 +11,6 @@ export const signUp = createAsyncThunk(
       return data;
     } catch (error) {
       const { data, status } = error.response;
-
       return rejectWithValue({ data, status });
     }
   }
@@ -86,8 +85,10 @@ export const getUser = createAsyncThunk(
         return data;
       }
     } catch (error) {
-      dispatch(refresh());
       const { data, status } = error.response;
+      if(status === 401) {
+        dispatch(refresh());
+      }
       return rejectWithValue({ data, status });
     }
   }

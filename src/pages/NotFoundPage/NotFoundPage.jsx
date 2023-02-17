@@ -16,15 +16,15 @@ export default function NotFoundPage() {
         </div>
         <div className={s.shadow}></div>
 
-        <h1 className={s.title}>Ой!</h1>
+        <h1 className={s.title}>Ups..!</h1>
         <p className={s.txt}>
-          Нам не вдалося знайти сторінку,
+        We could not find the page
           <br />
-          яку ви шукали.
+          you were looking for.
         </p>
 
         <Link to={backLinkHref}>
-          <Button text="Повернутися" />
+          <Button text="Go back" btnClass="btnLogin" />
         </Link>
       </div>
     </div>

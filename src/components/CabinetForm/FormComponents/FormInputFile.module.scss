@@ -1,0 +1,25 @@
+@use 'styles/mixins';
+
+.box {
+    margin-left: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 120px; 
+    height: 50px;
+    border-radius: 50px;
+    background-color: #F2F5FC;
+
+    @include mixins.mq(tablet) {
+        width: 160px; 
+        height: 35px;
+    }
+}
+.label {
+    margin-top: 17px;
+    text-transform: capitalize;
+
+    @include mixins.mq(tablet) {
+        margin-top: 10px;
+    }
+}

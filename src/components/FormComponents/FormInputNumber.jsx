@@ -63,7 +63,7 @@ const TextFieldStyledTab = styled(TextField)({
     lineHeight: '1.14',
     letterSpacing: '0.02em',
     textTransform: 'initial',
-    textAlign: 'right',
+    textAlign: 'center',
 
     color: 'var(--second-text-color)',
     background: 'transparent',
@@ -101,7 +101,7 @@ const TextFieldStyledDesk = styled(TextField)({
     lineHeight: '1.14',
     letterSpacing: '0.02em',
     textTransform: 'initial',
-    textAlign: 'right',
+    textAlign: 'center',
 
     color: 'var(--second-text-color)',
     background: 'transparent',

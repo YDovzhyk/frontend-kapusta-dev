@@ -1,9 +1,9 @@
-export default function ProductsIcon({ width, height }) {
+export default function ProductsIcon({ width, height, style }) {
   return (
     <svg
       width={width}
       height={height}
-      style={{ zIndex: 1 }}
+      style={{ fill: style, zIndex: 1 }}
       viewBox="0 0 65 57"
       xmlns="http://www.w3.org/2000/svg"
     >

@@ -7,21 +7,41 @@ import {
   axiosGetExpensesTransByDate,
   axiosGetIncomeTransByDate,
   axiosGetChartData,
+  axiosGetReportBalance,
+  axiosGetSliderReportData,
 } from 'api/transactions';
-import { axiosUserAddBalance } from 'api/user';
 
-import { getUser, refresh } from 'redux/auth/auth-operations'; ///////
+import { axiosUserAddBalance, axiosGetBalance } from 'api/user';
+
+import { refresh } from 'redux/auth/auth-operations';
 
 export const userAddBalance = createAsyncThunk(
   'user/addBalance',
   async (userData, { rejectWithValue, dispatch }) => {
     try {
       const data = await axiosUserAddBalance(userData);
-      console.log("Це дата", data)
       return data;
     } catch (error) {
       const { data, status } = error.response;
-      dispatch(refresh());
+      if(status === 401) {
+        dispatch(refresh());
+      }
+      return rejectWithValue({ data, status });
+    }
+  }
+);
+
+export const userGetBalance = createAsyncThunk(
+  'user/userGetBalance',
+  async (_, { rejectWithValue, dispatch }) => {
+    try {
+      const data = await axiosGetBalance();
+      return data;
+    } catch (error) {
+      const { data, status } = error.response;
+      if(status === 401) {
+        dispatch(refresh());
+      }
       return rejectWithValue({ data, status });
     }
   }
@@ -35,7 +55,9 @@ export const getTransactionsByMonth = createAsyncThunk(
       return data;
     } catch (error) {
       const { data, status } = error.response;
-      dispatch(refresh());
+      if(status === 401) {
+        dispatch(refresh());
+      }
       return rejectWithValue({ data, status });
     }
   }
@@ -49,7 +71,9 @@ export const addTransaction = createAsyncThunk(
       return data;
     } catch (error) {
       const { data, status } = error.response;
-      dispatch(refresh());
+      if(status === 401) {
+        dispatch(refresh());
+      }
       return rejectWithValue({ data, status });
     }
   }
@@ -63,7 +87,9 @@ export const deleteTransaction = createAsyncThunk(
       return data;
     } catch (error) {
       const { data, status } = error.response;
-      dispatch(refresh());
+      if(status === 401) {
+        dispatch(refresh());
+      }
       return rejectWithValue({ data, status });
     }
   }
@@ -77,7 +103,9 @@ export const getExpensesTransByDate = createAsyncThunk(
       return data;
     } catch (error) {
       const { data, status } = error.response;
-      dispatch(refresh());
+      if(status === 401) {
+        dispatch(refresh());
+      }
       return rejectWithValue({ data, status });
     }
   }
@@ -91,7 +119,9 @@ export const getIncomeTransByDate = createAsyncThunk(
       return data;
     } catch (error) {
       const { data, status } = error.response;
-      dispatch(refresh());
+      if(status === 401) {
+        dispatch(refresh());
+      }
       return rejectWithValue({ data, status });
     }
   }
@@ -105,7 +135,41 @@ export const getChartData = createAsyncThunk(
       return data;
     } catch (error) {
       const { data, status } = error.response;
-      dispatch(refresh());
+      if(status === 401) {
+        dispatch(refresh());
+      }
+      return rejectWithValue({ data, status });
+    }
+  }
+);
+
+export const getReportBalance = createAsyncThunk(
+  'transactions/getReportBalance',
+  async (userData, { rejectWithValue, dispatch }) => {
+    try {
+      const data = await axiosGetReportBalance(userData);
+      return data;
+    } catch (error) {
+      const { data, status } = error.response;
+      if(status === 401) {
+        dispatch(refresh());
+      }
+      return rejectWithValue({ data, status });
+    }
+  }
+);
+
+export const getSliderReport = createAsyncThunk(
+  'transactions/getBarChart',
+  async (userData, { rejectWithValue, dispatch }) => {
+    try {
+      const data = await axiosGetSliderReportData(userData);
+      return data;
+    } catch (error) {
+      const { data, status } = error.response;
+      if(status === 401) {
+        dispatch(refresh());
+      }
       return rejectWithValue({ data, status });
     }
   }

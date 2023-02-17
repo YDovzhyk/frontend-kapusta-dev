@@ -1,4 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getSliderReportData } from 'redux/transaction/transaction-selectors';
+import { addCategoryName } from 'redux/transaction/transaction-slice';
+import { nanoid } from '@reduxjs/toolkit';
 
 import ArrowCalendLeftIcon from 'components/icons/ArrowCalendLeft/ArrowCalendLeft';
 import ArrowCalendRightIcon from 'components/icons/ArrowCalendRight/ArrowCalendRight';
@@ -23,45 +27,92 @@ import s from './SliderReport.module.scss';
 
 import { expenses, income } from './data.js';
 
-const FilterIcon = (category, height) => {
+const FilterIcon = (category, height, style) => {
   switch (category?.toLocaleLowerCase()) {
     case 'products':
-      return <ProductsIcon height={height} />;
+      return <ProductsIcon height={height} style={style} />;
     case 'alcohol':
-      return <AlcoholIcon height={height} />;
+      return <AlcoholIcon height={height} style={style} />;
     case 'entertainment':
-      return <EntertainmentIcon height={height} />;
+      return <EntertainmentIcon height={height} style={style} />;
     case 'health':
-      return <HealthIcon height={height} />;
+      return <HealthIcon height={height} style={style} />;
     case 'transport':
-      return <TransportIcon height={height} />;
+      return <TransportIcon height={height} style={style} />;
     case 'housing':
-      return <HousingIcon height={height} />;
+      return <HousingIcon height={height} style={style} />;
     case 'technique':
-      return <TechniqueIcon height={height} />;
+      return <TechniqueIcon height={height} style={style} />;
     case 'communal, communication':
-      return <CommunalIcon height={height} />;
+      return <CommunalIcon height={height} style={style} />;
     case 'sports, hobbies':
-      return <SportsIcon height={height} />;
+      return <SportsIcon height={height} style={style} />;
     case 'education':
-      return <EducationIcon height={height} />;
+      return <EducationIcon height={height} style={style} />;
     case 'other':
-      return <OtherIcon height={height} />;
+      return <OtherIcon height={height} style={style} />;
     case 'salary':
-      return <SalaryIcon height={height} />;
+      return <SalaryIcon height={height} style={style} />;
     case 'add.income':
-      return <AddIncomeIcon height={height} />;
+      return <AddIncomeIcon height={height} style={style} />;
     default:
       return '';
   }
 };
 
 export default function SliderReport() {
+
   const [item, setItem] = useState(true);
+  const [categoryName, setCategoryName] = useState('expenses');
+  const [expensesList, setExpensesList] = useState(expenses);
+  const [incomeList, setIncomeList] = useState(income);
+  const [selectedCatName, setSelectedCatName] = useState('Products');
+  
+  const dispatch = useDispatch();
+
+  const reportData = useSelector(getSliderReportData);
+  const expensesData = reportData[1].expenses.map(el => ({category: Object.keys(el)[0], sum: Object.values(el)[0]}));
+  const incomeData = reportData[0].income.map(el => ({category: Object.keys(el)[0], sum: Object.values(el)[0]}));
+  const lengthExpensesData = expensesData.length;
+  const lengthincomeData = incomeData.length;
 
   const handlerToggle = () => {
     setItem(!item);
+    if(!item) {
+      setCategoryName('expenses');
+      setSelectedCatName('Products');
+    } else {
+      setCategoryName('income');
+      setSelectedCatName('Salary');
+    }
   };
+
+  useEffect(() => {
+    if (categoryName === 'expenses' && lengthExpensesData === 0) {
+      setExpensesList(expenses);
+      return;
+    }
+    if (categoryName === 'income' && lengthincomeData === 0) {
+      setIncomeList(income);
+      return;
+    }
+    if (categoryName === 'expenses' && lengthExpensesData > 0) {
+      setExpensesList(expensesData);
+    }
+    if (categoryName === 'income' && lengthincomeData > 0) {
+      setIncomeList(incomeData);
+    }
+    // eslint-disable-next-line
+  }, [categoryName, lengthExpensesData, lengthincomeData]);
+
+  const handleClick = (e, categoryName) => {
+    e.preventDefault();
+    setSelectedCatName(categoryName)
+  };
+
+  useEffect(() => {
+    dispatch(addCategoryName(selectedCatName));
+  }, [dispatch, selectedCatName]);
 
   return (
     <div className={s.overlay}>
@@ -77,28 +128,28 @@ export default function SliderReport() {
 
       {item && (
         <ul className={s.list}>
-          {expenses.map(({ category, sum }) => (
-            <li key={category} className={s.item}>
-              <Text text={sum} />
-              {FilterIcon(category, '56')}
+          {expensesList.map(({ category, sum }) => (
+            <li key={nanoid()} className={s.item} onClick={(e) => handleClick(e, category)}>
+              {category === selectedCatName ? <Text text={sum} textClass="selectedItem"/> : <Text text={sum}/>}
+              {category === selectedCatName ? FilterIcon(category, '56', '#FF751D') : FilterIcon(category, '56', '#071F41')}
               <div className={s.overlayIcon}>
                 <RectangleIcon width="59px" height="46px" fill="#F5F6FB" />
               </div>
-              <Text text={category} />
+              {category === selectedCatName ? <Text text={category} textClass="selectedItem"/> : <Text text={category}/>}
             </li>
           ))}
         </ul>
       )}
       {!item && (
         <ul className={s.list}>
-          {income.map(({ category, sum }) => (
-            <li key={category} className={s.item}>
-              <Text text={sum} />
-              {FilterIcon(category, '56')}
+          {incomeList.map(({ category, sum }) => (
+            <li key={nanoid()} className={s.item} onClick={(e) => handleClick(e, category)}>
+              {category === selectedCatName ? <Text text={sum} textClass="selectedItem"/> : <Text text={sum}/>}
+              {category === selectedCatName ? FilterIcon(category, '56', '#FF751D') : FilterIcon(category, '56', '#071F41')}
               <div className={s.overlayIcon}>
                 <RectangleIcon width="59px" height="46px" fill="#F5F6FB" />
               </div>
-              <Text text={category} />
+              {category === selectedCatName ? <Text text={category} textClass="selectedItem"/> : <Text text={category}/>}
             </li>
           ))}
         </ul>

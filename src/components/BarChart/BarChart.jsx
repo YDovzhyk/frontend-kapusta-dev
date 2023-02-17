@@ -4,8 +4,9 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { getChartData } from 'redux/transaction/transaction-operations';
 import {
-  getCalendarDate,
   getCategoryData,
+  getCategoryName,
+  getCurrentDate,
 } from 'redux/transaction/transaction-selectors';
 
 import s from './BarChart.module.scss';
@@ -23,66 +24,40 @@ import {
   LabelList,
 } from 'recharts';
 
-const da = [
-  {
-    name: 'Pork',
-    price: 4000,
-  },
-  {
-    name: 'Chiken',
-    price: 3000,
-  },
-  {
-    name: 'Coffee',
-    price: 2000,
-  },
-  {
-    name: 'Fish',
-    price: 2780,
-  },
-  {
-    name: 'Spaghetti',
-    price: 1890,
-  },
-  {
-    name: 'Panini',
-    price: 2390,
-  },
-  {
-    name: 'Beef',
-    price: 3490,
-  },
-];
-
 function Chart() {
   const isMobile = useMediaQuery('(max-width: 767px)');
+
   const dispatch = useDispatch();
-  const calendarDate = useSelector(getCalendarDate);
-  const ChartData = useSelector(getCategoryData);
-
-  const [data, setData] = useState(da);
-
-  const sorteredData = data.sort((a, b) => b.price - a.price);
+  const categoryName = useSelector(getCategoryName);
+  const currentDate = useSelector(getCurrentDate);
 
   useEffect(() => {
+    if(!categoryName || currentDate === '') {
+      return;
+    }
     dispatch(
       getChartData({
-        reqDate: calendarDate || '12/01/2022',
-        transitionCategory: 'Other',
+        reqDate: currentDate,
+        transitionCategory: categoryName,
       })
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [calendarDate]);
+  }, [dispatch, currentDate, categoryName]);
+
+  const chartData = useSelector(getCategoryData);
+
+  const [data, setData] = useState([{name: '', price: 0}]);
 
   useEffect(() => {
     // eslint-disable-next-line array-callback-return
-    const changeObjFormat = ChartData.map(el => {
+    const changeObjFormat = chartData.map(el => {
       for (const key in el) {
         return { name: key, price: el[key] };
       }
     });
     setData(changeObjFormat);
-  }, [ChartData]);
+  }, [chartData]);
+
+  const sorteredData = data.sort((a, b) => b.price - a.price);
 
   const renderCustomizedLabelName = ({ x, y, value }) => {
     return (
@@ -109,7 +84,7 @@ function Chart() {
       <g className={s.text}>
         <text
           x={x + width / 1.5}
-          y={y - 20}
+          y={y-10}
           textAnchor="middle"
           dominantBaseline="middle"
         >
@@ -132,7 +107,7 @@ function Chart() {
 
     return (
       <g transform={`translate(${x},${y})`} className={s.text}>
-        <text x={0} y={0} dy={16} textAnchor="middle">
+        <text x={0} y={0-5} dy={15} textAnchor="middle">
           {payload.value}
         </text>
       </g>
@@ -143,55 +118,65 @@ function Chart() {
 
   if (isMobile) {
     return (
-      <ResponsiveContainer maxWidth="100%" height={dinamicHight}>
-        <BarChart data={sorteredData} layout="vertical" maxBarSize={18}>
-          <XAxis type="number" hide axisLine={false} tickLine={false} />
-          <YAxis
-            hide
-            type="category"
-            dataKey="name"
-            tick={renderCustomizedAxisTick}
-            axisLine={false}
-            tickLine={false}
-          />
-          <Tooltip cursor={{ fill: 'transparent' }} />
-          <Bar dataKey="price">
-            {sorteredData.map((_, i) => (
-              <Cell
-                key={`${i}`}
-                fill={i % 3 ? 'var(--second-accent-color)' : 'var(--accent-color)'}
-                radius={[0, 10, 10, 0]}
-              />
-            ))}
-
-            <LabelList
+      <div className={s.wrap}>
+        <ResponsiveContainer maxWidth="100%" height={dinamicHight}>
+          <BarChart data={sorteredData} layout="vertical" maxBarSize={18}>
+            <XAxis type="number" hide axisLine={false} tickLine={false} />
+            <YAxis
+              hide
+              type="category"
               dataKey="name"
-              fill="var(--text-color)"
-              content={renderCustomizedLabelName}
+              tick={renderCustomizedAxisTick}
+              axisLine={false}
+              tickLine={false}
             />
-            <LabelList
-              dataKey="price"
-              fill="var(--text-color)"
-              content={renderCustomizedLabel}
-            />
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
+            <Tooltip cursor={{ fill: 'transparent' }} />
+            <Bar dataKey="price">
+              {sorteredData.map((_, i) => (
+                <Cell
+                  key={`${i}`}
+                  fill={i % 3 ? 'var(--second-accent-color)' : 'var(--accent-color)'}
+                  radius={[0, 10, 10, 0]}
+                />
+              ))}
+
+              <LabelList
+                dataKey="name"
+                fill="var(--text-color)"
+                content={renderCustomizedLabelName}
+              />
+              <LabelList
+                dataKey="price"
+                fill="var(--text-color)"
+                content={renderCustomizedLabel}
+              />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
     );
   }
 
   return (
     <div className={s.wrap}>
-      <ResponsiveContainer width="100%" height={dinamicHight}>
-        <BarChart data={sorteredData}>
+      <ResponsiveContainer width="100%" height={380}>
+        <BarChart 
+        data={sorteredData}
+        margin={{
+          top: 40,
+          right: 20,
+          left: 20,
+          bottom: 5,
+        }}
+        >
           <CartesianGrid vertical={false} stroke="#F5F6FB" horizontalPoints={[]} y={38} />
-          <XAxis
-            tick={renderCustomizedAxisTick}
-            axisLine={false}
-            tickLine={false}
-            dataKey="name"
-          >
-            <Label />
+            <XAxis
+              tick={renderCustomizedAxisTick}
+              axisLine={false}
+              tickLine={false}
+              dataKey="name"
+            >
+          <Label />
           </XAxis>
           <Tooltip cursor={{ fill: 'transparent' }} />
           <Bar dataKey="price" maxBarSize={38}>

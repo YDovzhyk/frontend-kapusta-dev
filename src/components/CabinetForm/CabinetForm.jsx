@@ -82,7 +82,7 @@ export default function CabinetForm() {
 
   return (
     <div className={s.cabinetForm}>
-      <ButtonBack text="Main page" width="18" height="12" className="btnAccSetting" to="/"/>
+      <ButtonBack text="Main page" width="18" height="12" btnClass="btnAccountPage" to="/"/>
       <TitleH1 text="Account settings"/>
       <Text text="Upload photo" textClass="textFormEmail" />
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>

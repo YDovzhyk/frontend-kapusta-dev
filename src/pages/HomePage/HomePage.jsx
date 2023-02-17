@@ -5,7 +5,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { getLogin, getUserIsRefreshing } from 'redux/auth/auth-selectors';
 
 import { getNewUser } from 'redux/auth/auth-selectors';
-import { getCurrentDate, getBalance } from 'redux/transaction/transaction-selectors';
+import { getCurrentDate, getBalance, isLoading } from 'redux/transaction/transaction-selectors';
 import { getTransactionsByMonth } from 'redux/transaction/transaction-operations';
 
 import Section from 'components/layout/Section/Section';
@@ -20,6 +20,7 @@ import TransactionList from 'components/TransactionList/TransactionList';
 import TransactionTable from 'components/TransactionTable/TransactionTable';
 import SummaryTable from 'components/SummaryTable/SummaryTable';
 import NotificationBalance from 'components/NotificationBalance/NotificationBalance';
+import Loader from 'components/ui/Loader/Loader';
 
 import KapustaTwoIcon from 'components/icons/KapustaTwo/KapustaTwo';
 import KapustaManyIcon from 'components/icons/KapustaMany/KapustaMany';
@@ -36,6 +37,7 @@ export default function HomePage() {
   const newUser = useSelector(getNewUser);
   const currentDate = useSelector(getCurrentDate);
   const balance = useSelector(getBalance);
+  const loader = useSelector(isLoading);
 
   const isUserLogin = useSelector(getLogin);
   const isRefresh = useSelector(getUserIsRefreshing);
@@ -53,6 +55,7 @@ export default function HomePage() {
       {isMobile && (
         <>
           <Section sectionClass="sectionMarg">
+            {loader &&<Loader/>}
             <ButtonBack btnClass="btnExp" width="0px" height="12px" />
             <div className={s.overleyTab}>
               <LinkReport />
@@ -70,6 +73,7 @@ export default function HomePage() {
       {isTabletMin && isTabletMax && (
         <Section sectionClass="sectionMarg">
           <div className={s.overleyTab}>
+          {loader &&<Loader/>}
             <LinkReport />
             <FormAddBalance />
             {newUser && balance === 0 && <NotificationBalance />}
@@ -89,6 +93,7 @@ export default function HomePage() {
       {isDesktop && (
         <Section sectionClass="sectionMarg">
           <div className={s.overleyTab}>
+          {loader &&<Loader/>}
             <LinkReport />
             <FormAddBalance />
             {newUser && balance === 0 && <NotificationBalance />}

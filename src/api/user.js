@@ -6,6 +6,12 @@ export const axiosUserAddBalance = async userData => {
   return data;
 };
 
+// Get balance
+export const axiosGetBalance = async () => {
+  const { data } = await instance.get('api/balances');
+  return data;
+};
+
 // Update user account
 export const axiosUserUpdateAccount = async userData => {
   await instance.patch(

@@ -1,9 +1,9 @@
-export default function AlcoholIcon({ height }) {
+export default function AlcoholIcon({ width, height, style }) {
   return (
     <svg
       height={height}
       viewBox="0 0 56 56"
-      style={{ zIndex: 1 }}
+      style={{ fill: style, zIndex: 1 }}
       xmlns="http://www.w3.org/2000/svg"
     >
       <path d="M13.535 4.725a.831.831 0 0 0-.83.83v.352a.831.831 0 0 0 1.661 0v-.351a.831.831 0 0 0-.83-.831ZM11.12 7.492h-.352a.831.831 0 0 0 0 1.662h.351a.831.831 0 1 0 0-1.662ZM12.414 6.027l-.248-.249a.83.83 0 0 0-1.175 1.176l.248.248a.828.828 0 0 0 1.175 0 .83.83 0 0 0 0-1.175ZM12.414 9.444a.83.83 0 0 0-1.175 0l-.248.248a.83.83 0 1 0 1.175 1.175l.248-.248a.83.83 0 0 0 0-1.175Z" />

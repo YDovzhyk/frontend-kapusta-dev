@@ -32,18 +32,16 @@ export default function Calendar({ dateFormat = 'MM.dd.yyyy', showMonthYearPicke
     dispatch(addDate(setDate));
   };
 
-  const year = startDate.getUTCFullYear();
-  const mounth = startDate.getUTCMonth();
-  const day = startDate.getUTCDate();
-
   const handleDecrementMonth = () => {
-    const newDate = new Date(year, mounth - 1, day);
-    setStartDate(newDate);
+      const decrementDate = new Date(startDate);
+      decrementDate.setMonth(decrementDate.getMonth() - 1);
+      handleChange(decrementDate);
   };
 
   const handleIncrementMonth = () => {
-    const newDate = new Date(year, mounth + 1, day);
-    setStartDate(newDate);
+    const incrementDate = new Date(startDate);
+    incrementDate.setMonth(incrementDate.getMonth() + 1);
+    handleChange(incrementDate);
   };
 
   const CustomInputExpInc = forwardRef(({ value, onClick }, ref) => (

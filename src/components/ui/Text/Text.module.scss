@@ -169,3 +169,38 @@
 
   color: var(--second-text-color);
 }
+
+.textBalanceEx {
+  margin-top: 5px;
+
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.14;
+  color: #E53935;
+
+  @include mixins.mq(tablet) {
+    margin: 0px;
+  }
+}
+
+.textBalanceIn {
+  margin-top: 5px;
+
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.14;
+  color: #407946;
+
+  @include mixins.mq(tablet) {
+    margin: 0px;
+  }
+}
+
+.selectedItem {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.14;
+  letter-spacing: 0.02em;
+
+  color: var(--accent-color);
+}

@@ -1,10 +1,10 @@
-export default function AddIncomeIcon({ width, height }) {
+export default function AddIncomeIcon({ width, height, style }) {
   return (
     <svg
       width={width}
       height={height}
       viewBox="0 0 56 56"
-      style={{ zIndex: 1 }}
+      style={{ fill: style, zIndex: 1 }}
       xmlns="http://www.w3.org/2000/svg"
     >
       <path d="M20.423 33.856a.82.82 0 0 0-.82-.82h-7.955a.82.82 0 0 0-.82.82v5.303c0 .453.367.82.82.82h7.955a.82.82 0 0 0 .82-.82v-5.303Zm-1.64 4.483h-6.315v-3.663h6.315v3.663ZM39.933 38.211h4.419a.82.82 0 1 0 0-1.64h-4.42a.82.82 0 1 0 0 1.64ZM39.933 34.676h4.419a.82.82 0 1 0 0-1.64h-4.42a.82.82 0 1 0 0 1.64Z" />

@@ -1,10 +1,11 @@
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { getErrorSignUp, getNewUser } from 'redux/auth/auth-selectors';
+import { getErrorSignUp, getNewUser, isLoading } from 'redux/auth/auth-selectors';
 
 import FormSingup from 'components/FormSingup/FormSingup';
 import Section from 'components/layout/Section/Section';
+import Loader from 'components/ui/Loader/Loader';
 
 import KapustaManyIcon from 'components/icons/KapustaMany/KapustaMany';
 import KapustaOneIcon from 'components/icons/KapustaOne/KapustaOne';
@@ -15,6 +16,7 @@ import LogoKapustaTabIcon from 'components/icons/LogoKapustaTab/LogoKapustaTab';
 export default function SignUpPage() {
   const errorSignUp = useSelector(getErrorSignUp);
   const newUserEmail = useSelector(getNewUser);
+  const loader = useSelector(isLoading);
 
   if (!errorSignUp && newUserEmail) {
     return <Navigate to="/login" />;
@@ -23,6 +25,7 @@ export default function SignUpPage() {
   return (
     <>
       <Section sectionClass="section">
+        {loader && <Loader/>}
         <LogoKapustaMobIcon iconClass="home" width="183" height="63" />
         <LogoKapustaTabIcon iconClass="home" width="305" height="100" />
         <KapustaManyIcon iconClass="home" width="1334" height="232" />
