@@ -52,8 +52,10 @@ export const logOut = createAsyncThunk(
       const data = await axiosLogOut(accessToken);
       return data;
     } catch (error) {
-      dispatch(refresh());
       const { data, status } = error.response;
+      if(status === 401) {
+        dispatch(refresh());
+      }
       return rejectWithValue({ data, status });
     }
   }

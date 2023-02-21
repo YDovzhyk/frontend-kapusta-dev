@@ -30,6 +30,7 @@ export const axiosGetIncomeTransByDate = async userData => {
   return data;
 };
 
+// Get data by category description
 export const axiosGetChartData = async userData => {
   const { data } = await instance.post(
     'api/transitions/report/category/detail',
@@ -38,6 +39,7 @@ export const axiosGetChartData = async userData => {
   return data;
 };
 
+// Get data by category income/expenses
 export const axiosGetReportBalance = async userData => {
   const { data } = await instance.post(
     'api/transitions/report/category',
@@ -46,6 +48,7 @@ export const axiosGetReportBalance = async userData => {
   return data;
 };
 
+// Get data by group category
 export const axiosGetSliderReportData = async userData => {
   const { data } = await instance.post(
     'api/transitions/report/category/data',

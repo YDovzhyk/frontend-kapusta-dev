@@ -5,6 +5,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { getIncomeTransByDate } from 'redux/transaction/transaction-operations';
 import { getCurrentDate, isLoading } from 'redux/transaction/transaction-selectors';
+import { getLogin, getUserIsRefreshing } from 'redux/auth/auth-selectors';
 
 import Section from 'components/layout/Section/Section';
 
@@ -37,12 +38,15 @@ export default function IncomePage() {
   const currentDate = useSelector(getCurrentDate);
   const loader = useSelector(isLoading);
 
+  const isUserLogin = useSelector(getLogin);
+  const isRefresh = useSelector(getUserIsRefreshing);
+
   useEffect(() => {
     if (currentDate === '') {
       return;
     }
     dispatch(getIncomeTransByDate({ reqDate: currentDate }));
-  }, [dispatch, currentDate]);
+  }, [dispatch, currentDate, isUserLogin, isRefresh]);
 
   return (
     <>

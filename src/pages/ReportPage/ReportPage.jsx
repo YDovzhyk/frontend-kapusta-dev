@@ -4,6 +4,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { getCurrentDate, getBalance, isLoading } from 'redux/transaction/transaction-selectors';
 import { getReportBalance, userGetBalance, getSliderReport } from 'redux/transaction/transaction-operations';
+import { getLogin, getUserIsRefreshing } from 'redux/auth/auth-selectors';
 
 import Section from 'components/layout/Section/Section';
 
@@ -28,6 +29,9 @@ export default function ReportPage() {
   const dispatch = useDispatch();
   const currentDate = useSelector(getCurrentDate);
 
+  const isUserLogin = useSelector(getLogin);
+  const isRefresh = useSelector(getUserIsRefreshing);
+
   useEffect(() => {
     if (currentDate === '') {
       return;
@@ -36,7 +40,7 @@ export default function ReportPage() {
     dispatch(userGetBalance());
     dispatch(getSliderReport({ reqDate: currentDate }));
 
-  }, [dispatch, currentDate]);
+  }, [dispatch, currentDate, isUserLogin, isRefresh]);
 
   const balance = useSelector(getBalance);
   const loader = useSelector(isLoading);

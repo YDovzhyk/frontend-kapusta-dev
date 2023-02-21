@@ -3,6 +3,8 @@ export const getErrorSignUp = ({ auth }) => auth.error;
 export const getErrorLogIn = ({ auth }) => auth.error;
 export const getAccessToken = ({ auth }) => auth.accessToken;
 export const isLoading = ({ auth }) => auth.loading;
+export const getIsTotalLogin = ({ auth }) => auth.isTotalLogin;
+export const getErrorLogInCode = ({ auth }) => auth.errorCode;
 
 export const getUser = ({ auth }) => auth.user;
 export const getNewUser = ({ auth }) => auth.user.newUser;

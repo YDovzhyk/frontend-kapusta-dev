@@ -204,3 +204,26 @@
 
   color: var(--accent-color);
 }
+
+.textWarning {
+  margin: 5px auto;
+
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.14;
+  letter-spacing: 0.02em;
+  text-align: center;
+  text-transform: initial;
+}
+
+.textWarningLast {
+  margin: 5px auto;
+  margin-bottom: 20px;
+
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.14;
+  letter-spacing: 0.02em;
+  text-align: center;
+  text-transform: initial;
+}

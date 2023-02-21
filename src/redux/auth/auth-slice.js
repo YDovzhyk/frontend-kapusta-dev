@@ -10,10 +10,11 @@ const initialState = {
   refreshToken: '',
   sid: '',
   isLogin: false,
+  isTotalLogin: false,
   loading: false,
   isRefreshing: false,
-  totalRefresh: false,
   error: null,
+  errorCode: null,
 };
 
 const accessAuth = (state, payload) => {
@@ -23,8 +24,8 @@ const accessAuth = (state, payload) => {
   state.refreshToken = payload.refreshToken;
   state.loading = false;
   state.isLogin = true;
+  state.isTotalLogin = true;
   state.isRefreshing = false;
-  state.totalRefresh = false;
 };
 
 const auth = createSlice({
@@ -44,15 +45,18 @@ const auth = createSlice({
       .addCase(signUp.pending, state => {
         state.loading = true;
         state.error = null;
+        state.errorCode = null;
       })
       .addCase(signUp.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.isLogin = false;
+        state.isTotalLogin = false;
         state.newUser = payload.user.newUser;
       })
       .addCase(signUp.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload.data.message;
+        state.errorCode = payload.status;
       });
 
     // LogIn
@@ -61,6 +65,7 @@ const auth = createSlice({
         state.newUser = false;
         state.loading = true;
         state.error = null;
+        state.errorCode = null;
       })
       .addCase(logIn.fulfilled, (state, { payload }) => {
         accessAuth(state, payload);
@@ -68,6 +73,7 @@ const auth = createSlice({
       .addCase(logIn.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload.data.message;
+        state.error = payload.status;
       });
 
     // Google LogIn
@@ -75,6 +81,7 @@ const auth = createSlice({
       .addCase(googleLogIn.pending, state => {
         state.loading = true;
         state.error = null;
+        state.errorCode = null;
       })
       .addCase(googleLogIn.fulfilled, (state, { payload }) => {
         accessAuth(state, payload);
@@ -82,6 +89,7 @@ const auth = createSlice({
       .addCase(googleLogIn.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload.data.message;
+        state.errorCode = payload.status;
       });
 
     // LogOut
@@ -89,11 +97,13 @@ const auth = createSlice({
       .addCase(logOut.pending, state => {
         state.loading = true;
         state.error = null;
+        state.errorCode = null;
       })
-      .addCase(logOut.fulfilled, () => ({ ...initialState }))
+      .addCase(logOut.fulfilled, () => ({ ...initialState}))
       .addCase(logOut.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload.data.message;
+        state.errorCode = payload.status;
       });
 
     // User update account
@@ -101,6 +111,7 @@ const auth = createSlice({
       .addCase(userUpdateAccount.pending, state => {
         state.loading = true;
         state.error = null;
+        state.errorCode = null;
       })
       .addCase(userUpdateAccount.fulfilled, (state, { payload }) => {
         accessAuth(state, payload);
@@ -109,6 +120,7 @@ const auth = createSlice({
       .addCase(userUpdateAccount.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload.data.message;
+        state.errorCode = payload.status;
       });
 
       // Refresh
@@ -116,11 +128,14 @@ const auth = createSlice({
         .addCase(refresh.pending, state => {
           state.loading = true;
           state.error = null;
+          state.errorCode = null;
         })
         .addCase(refresh.fulfilled, (state, { payload }) => {
+          // accessAuth(state, payload);
           state.user = payload;
           state.loading = false;
-          state.isLogin = true;
+          state.isLogin = false;
+          state.isTotalLogin = true;
           state.isRefreshing = false;
           state.accessToken = payload.accessToken;
           state.refreshToken = payload.refreshToken;
@@ -129,8 +144,10 @@ const auth = createSlice({
         .addCase(refresh.rejected, (state, {payload}) => {
           state.loading = false;
           state.isLogin = false;
+          state.isTotalLogin = false;
           state.isRefreshing = false;
           state.error = payload.data.message;
+          state.errorCode = payload.status;
         });
       
       // Get user
@@ -138,10 +155,13 @@ const auth = createSlice({
       .addCase(getUser.pending, state => {
         state.loading = true;
         state.error = null;
+        state.errorCode = null;
       })
       .addCase(getUser.fulfilled, (state, { payload }) => {
+        // accessAuth(state, payload);
         state.loading = false;
         state.isLogin = true;
+        state.isTotalLogin = true;
         state.isRefreshing = false;
         state.user = payload;
       })
@@ -151,6 +171,7 @@ const auth = createSlice({
         state.isRefreshing = true;
         state.accessToken = "";
         state.error = payload.data.message;
+        state.errorCode = payload.status;
       });
   },
 });

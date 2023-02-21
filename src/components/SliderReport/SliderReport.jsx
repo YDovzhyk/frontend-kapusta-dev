@@ -66,24 +66,42 @@ export default function SliderReport() {
   const [categoryName, setCategoryName] = useState('expenses');
   const [expensesList, setExpensesList] = useState(expenses);
   const [incomeList, setIncomeList] = useState(income);
-  const [selectedCatName, setSelectedCatName] = useState('Products');
+  const [selectedCatName, setSelectedCatName] = useState('');
   
   const dispatch = useDispatch();
 
+  const getTranformData = (data) => {
+    const result = data.map(el => ({category: Object.keys(el)[0], sum: Object.values(el)[0]}));
+    const sortedResult = result.sort((a, b) => b.sum - a.sum);
+    return sortedResult;
+  }
+
   const reportData = useSelector(getSliderReportData);
-  const expensesData = reportData[1].expenses.map(el => ({category: Object.keys(el)[0], sum: Object.values(el)[0]}));
-  const incomeData = reportData[0].income.map(el => ({category: Object.keys(el)[0], sum: Object.values(el)[0]}));
+  const expensesData = getTranformData(reportData[1].expenses);
+  const incomeData = getTranformData(reportData[0].income);
+
   const lengthExpensesData = expensesData.length;
   const lengthincomeData = incomeData.length;
+
+  useEffect(() => {
+    if(lengthExpensesData > 0) {
+      setItem(true);
+      setSelectedCatName(`${expensesData[0].category}`);
+      setCategoryName('expenses');
+      setExpensesList(expensesData);
+      dispatch(addCategoryName(selectedCatName));
+    }
+    // eslint-disable-next-line
+  }, []);
 
   const handlerToggle = () => {
     setItem(!item);
     if(!item) {
       setCategoryName('expenses');
-      setSelectedCatName('Products');
+      setSelectedCatName(`${expensesData[0].category}`);
     } else {
       setCategoryName('income');
-      setSelectedCatName('Salary');
+      setSelectedCatName(`${incomeData[0].category}`);
     }
   };
 

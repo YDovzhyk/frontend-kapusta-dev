@@ -1,30 +1,45 @@
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { Navigate, Outlet } from 'react-router-dom';
 
-import { getLogin, getUserIsRefreshing } from 'redux/auth/auth-selectors';
+import { getLogin, getUserIsRefreshing, getIsTotalLogin } from 'redux/auth/auth-selectors';
+import { getErrorCode } from 'redux/transaction/transaction-selectors';
 import { getUser } from 'redux/auth/auth-operations';
+import Warning from 'components/ui/Warning/Warning';
 
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 
 export default function PrivateRoute() {
 
-const isUserLogin = useSelector(getLogin);
-const isRefresh = useSelector(getUserIsRefreshing);
+  const isUserLogin = useSelector(getLogin);
+  const isRefresh = useSelector(getUserIsRefreshing);
+  const isTotalLogin = useSelector(getIsTotalLogin);
+  const isErrorTransition = useSelector(getErrorCode);
 
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const [errorTransition, setErrorTransition] = useState(false);
 
-///This is for reload page
   useEffect(() => {
-      if(isUserLogin && !isRefresh) {
-        dispatch(getUser());
-      }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (isUserLogin && !isRefresh) {
+      dispatch(getUser());
+    }
+  }, [isRefresh, isUserLogin, dispatch]);
 
-  if (!isUserLogin && !isRefresh) {
+  useEffect(() => {
+    if (isErrorTransition === 401) {
+      setErrorTransition(true);
+    } else {
+      setErrorTransition(false);
+    }
+  }, [isErrorTransition]);
+
+
+  if (!isTotalLogin) {
     return <Navigate to="/login" />;
     }
 
-  return <Outlet />;
+  return <div>
+      {errorTransition && <Warning />}
+      <Outlet />
+    </div>;
 }

@@ -21,6 +21,7 @@ const initialState = {
   message: '',
   loading: false,
   error: null,
+  errorCode: null,
   calendarDate: null,
   chartData: [],
   reportBalance: [{expenses: 0}, {income: 0}],
@@ -47,6 +48,7 @@ const transactions = createSlice({
       .addCase(userAddBalance.pending, state => {
         state.loading = true;
         state.error = null;
+        state.errorCode = null;
       })
       .addCase(userAddBalance.fulfilled, (state, { payload }) => {
         state.balance = payload.newBalance;
@@ -55,6 +57,7 @@ const transactions = createSlice({
       .addCase(userAddBalance.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload.data.message;
+        state.errorCode = payload.status;
       });
 
       // User get balance
@@ -62,6 +65,7 @@ const transactions = createSlice({
       .addCase(userGetBalance.pending, state => {
         state.loading = true;
         state.error = null;
+        state.errorCode = null;
       })
       .addCase(userGetBalance.fulfilled, (state, { payload }) => {
         state.balance = payload.balance;
@@ -70,6 +74,7 @@ const transactions = createSlice({
       .addCase(userGetBalance.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload.data.message;
+        state.errorCode = payload.status;
       });
 
     // Get transactions by month
@@ -77,6 +82,7 @@ const transactions = createSlice({
       .addCase(getTransactionsByMonth.pending, state => {
         state.loading = true;
         state.error = null;
+        state.errorCode = null;
       })
       .addCase(getTransactionsByMonth.fulfilled, (state, { payload }) => {
         state.balance = payload.balance;
@@ -87,6 +93,7 @@ const transactions = createSlice({
       .addCase(getTransactionsByMonth.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload.data.message;
+        state.errorCode = payload.status;
       });
 
     // Add transaction
@@ -95,6 +102,7 @@ const transactions = createSlice({
         state.message = '';
         state.loading = true;
         state.error = null;
+        state.errorCode = null;
       })
       .addCase(addTransaction.fulfilled, (state, { payload }) => {
         state.message = payload.transitionName;
@@ -103,6 +111,7 @@ const transactions = createSlice({
       .addCase(addTransaction.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload.data.message;
+        state.errorCode = payload.status;
       });
 
     // Delete transaction
@@ -111,6 +120,7 @@ const transactions = createSlice({
         state.message = '';
         state.loading = true;
         state.error = null;
+        state.errorCode = null;
       })
       .addCase(deleteTransaction.fulfilled, (state, { payload }) => {
         state.message = payload.message;
@@ -119,6 +129,7 @@ const transactions = createSlice({
       .addCase(deleteTransaction.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload.data.message;
+        state.errorCode = payload.status;
       });
 
     // Get expenses transaction by date
@@ -126,6 +137,7 @@ const transactions = createSlice({
       .addCase(getExpensesTransByDate.pending, state => {
         state.loading = true;
         state.error = null;
+        state.errorCode = null;
       })
       .addCase(getExpensesTransByDate.fulfilled, (state, { payload }) => {
         state.balance = payload.balance;
@@ -136,6 +148,7 @@ const transactions = createSlice({
       .addCase(getExpensesTransByDate.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload.data.message;
+        state.errorCode = payload.status;
       });
 
     // Get income transaction by date
@@ -143,6 +156,7 @@ const transactions = createSlice({
       .addCase(getIncomeTransByDate.pending, state => {
         state.loading = true;
         state.error = null;
+        state.errorCode = null;
       })
       .addCase(getIncomeTransByDate.fulfilled, (state, { payload }) => {
         state.balance = payload.balance;
@@ -153,6 +167,7 @@ const transactions = createSlice({
       .addCase(getIncomeTransByDate.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload.data.message;
+        state.errorCode = payload.status;
       });
 
     // Get chart data
@@ -160,6 +175,7 @@ const transactions = createSlice({
       .addCase(getChartData.pending, state => {
         state.loading = true;
         state.error = null;
+        state.errorCode = null;
       })
       .addCase(getChartData.fulfilled, (state, { payload }) => {
         state.chartData = payload;
@@ -168,6 +184,7 @@ const transactions = createSlice({
       .addCase(getChartData.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload.data.message;
+        state.errorCode = payload.status;
       });
 
       // Get report balance data
@@ -175,6 +192,7 @@ const transactions = createSlice({
       .addCase(getReportBalance.pending, state => {
         state.loading = true;
         state.error = null;
+        state.errorCode = null;
       })
       .addCase(getReportBalance.fulfilled, (state, { payload }) => {
         state.reportBalance = payload;
@@ -183,6 +201,7 @@ const transactions = createSlice({
       .addCase(getReportBalance.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload.data.message;
+        state.errorCode = payload.status;
       });
 
       // Get slider report data
@@ -190,6 +209,7 @@ const transactions = createSlice({
       .addCase(getSliderReport.pending, state => {
         state.loading = true;
         state.error = null;
+        state.errorCode = null;
       })
       .addCase(getSliderReport.fulfilled, (state, { payload }) => {
         state.sliderReportData = payload;
@@ -198,6 +218,7 @@ const transactions = createSlice({
       .addCase(getSliderReport.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload.data.message;
+        state.errorCode = payload.status;
       });
   },
 });
