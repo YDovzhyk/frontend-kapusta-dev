@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-import { getLogin, getUserIsRefreshing } from 'redux/auth/auth-selectors';
+import { getUserIsRefreshing } from 'redux/auth/auth-selectors';
 
 import { getNewUser } from 'redux/auth/auth-selectors';
 import { getCurrentDate, getBalance, isLoading } from 'redux/transaction/transaction-selectors';
@@ -39,7 +39,6 @@ export default function HomePage() {
   const balance = useSelector(getBalance);
   const loader = useSelector(isLoading);
 
-  const isUserLogin = useSelector(getLogin);
   const isRefresh = useSelector(getUserIsRefreshing);
 
   useEffect(() => {
@@ -47,7 +46,7 @@ export default function HomePage() {
       return;
     }
     dispatch(getTransactionsByMonth({ reqDate: currentDate }));
-  }, [dispatch, currentDate, isUserLogin, isRefresh]);
+  }, [dispatch, currentDate, isRefresh]);
 
 
   return (

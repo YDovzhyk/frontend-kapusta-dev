@@ -6,7 +6,7 @@ import s from './Loader.module.scss';
 
 export default function Loader() {
     return <div className={s.loader}>
-        <Text text="Please wait, data loading..." textClass="textModal" />
+        <Text text="Please wait, data loading..." textClass="textLoader" />
         <RotatingLines
             strokeColor="#FF751D"
             strokeWidth="3"

@@ -131,12 +131,11 @@ const auth = createSlice({
           state.errorCode = null;
         })
         .addCase(refresh.fulfilled, (state, { payload }) => {
-          // accessAuth(state, payload);
           state.user = payload;
           state.loading = false;
-          state.isLogin = false;
+          state.isLogin = true;////
           state.isTotalLogin = true;
-          state.isRefreshing = false;
+          state.isRefreshing = true;////
           state.accessToken = payload.accessToken;
           state.refreshToken = payload.refreshToken;
           state.sid = payload.sid;
@@ -158,7 +157,6 @@ const auth = createSlice({
         state.errorCode = null;
       })
       .addCase(getUser.fulfilled, (state, { payload }) => {
-        // accessAuth(state, payload);
         state.loading = false;
         state.isLogin = true;
         state.isTotalLogin = true;

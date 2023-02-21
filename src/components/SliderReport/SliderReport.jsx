@@ -66,7 +66,7 @@ export default function SliderReport() {
   const [categoryName, setCategoryName] = useState('expenses');
   const [expensesList, setExpensesList] = useState(expenses);
   const [incomeList, setIncomeList] = useState(income);
-  const [selectedCatName, setSelectedCatName] = useState('');
+  const [selectedCatName, setSelectedCatName] = useState('Products');
   
   const dispatch = useDispatch();
 
@@ -85,12 +85,14 @@ export default function SliderReport() {
 
   useEffect(() => {
     if(lengthExpensesData > 0) {
-      setItem(true);
-      setSelectedCatName(`${expensesData[0].category}`);
-      setCategoryName('expenses');
-      setExpensesList(expensesData);
-      dispatch(addCategoryName(selectedCatName));
-    }
+      console.log('Yes data here', expensesData[0].category)
+      console.log(expensesData)
+      // setItem(true);
+      // setSelectedCatName(expensesData[0].category);
+      // setCategoryName('expenses');
+      // setExpensesList(expensesData);
+      // dispatch(addCategoryName(selectedCatName));
+    } 
     // eslint-disable-next-line
   }, []);
 

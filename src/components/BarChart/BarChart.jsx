@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { getChartData } from 'redux/transaction/transaction-operations';
+import { getUserIsRefreshing } from 'redux/auth/auth-selectors';
+
 import {
   getCategoryData,
   getCategoryName,
@@ -31,17 +33,20 @@ function Chart() {
   const categoryName = useSelector(getCategoryName);
   const currentDate = useSelector(getCurrentDate);
 
+  const isRefresh = useSelector(getUserIsRefreshing);
+
   useEffect(() => {
     if(!categoryName || currentDate === '') {
       return;
+    } else {
+      dispatch(
+        getChartData({
+          reqDate: currentDate,
+          transitionCategory: categoryName,
+        })
+      );
     }
-    dispatch(
-      getChartData({
-        reqDate: currentDate,
-        transitionCategory: categoryName,
-      })
-    );
-  }, [dispatch, currentDate, categoryName]);
+  }, [dispatch, currentDate, categoryName, isRefresh]);
 
   const chartData = useSelector(getCategoryData);
 
