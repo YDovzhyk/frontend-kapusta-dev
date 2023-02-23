@@ -25,7 +25,7 @@ const initialState = {
   calendarDate: null,
   chartData: [],
   reportBalance: [{expenses: 0}, {income: 0}],
-  sliderReportData: [{income: [{}]}, {expenses: [{}]}],
+  sliderReportData: [{income: []}, {expenses: []}],
 };
 
 const transactions = createSlice({
@@ -40,6 +40,14 @@ const transactions = createSlice({
     },
     addCategoryName: (state, { payload }) => {
       state.categoryName = payload;
+    },
+    clearTransisions: () => ({ ...initialState}),
+    clearChartData: (state) => {
+      state.chartData = [];
+    },
+    clearErrorTr: state => {
+      state.error = null;
+      state.errorCode = null;
     },
   },
   extraReducers: builder => {
@@ -228,3 +236,5 @@ export default transactions.reducer;
 export const { addDate } = transactions.actions;
 export const { addCalendarDate } = transactions.actions;
 export const { addCategoryName } = transactions.actions;
+export const { clearTransisions, clearChartData, clearErrorTr } = transactions.actions;
+

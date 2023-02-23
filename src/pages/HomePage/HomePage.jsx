@@ -7,6 +7,7 @@ import { getUserIsRefreshing } from 'redux/auth/auth-selectors';
 import { getNewUser } from 'redux/auth/auth-selectors';
 import { getCurrentDate, getBalance, isLoading } from 'redux/transaction/transaction-selectors';
 import { getTransactionsByMonth } from 'redux/transaction/transaction-operations';
+import { clearTransisions } from 'redux/transaction/transaction-slice';
 
 import Section from 'components/layout/Section/Section';
 
@@ -45,6 +46,7 @@ export default function HomePage() {
     if (currentDate === '') {
       return;
     }
+    dispatch(clearTransisions());
     dispatch(getTransactionsByMonth({ reqDate: currentDate }));
   }, [dispatch, currentDate, isRefresh]);
 

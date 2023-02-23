@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getSliderReportData } from 'redux/transaction/transaction-selectors';
 import { addCategoryName } from 'redux/transaction/transaction-slice';
+
 import { nanoid } from '@reduxjs/toolkit';
 
 import ArrowCalendLeftIcon from 'components/icons/ArrowCalendLeft/ArrowCalendLeft';
@@ -66,7 +67,8 @@ export default function SliderReport() {
   const [categoryName, setCategoryName] = useState('expenses');
   const [expensesList, setExpensesList] = useState(expenses);
   const [incomeList, setIncomeList] = useState(income);
-  const [selectedCatName, setSelectedCatName] = useState('Products');
+  const [selectedCatName, setSelectedCatName] = useState('');
+  const [data, setData] = useState(false);
   
   const dispatch = useDispatch();
 
@@ -83,19 +85,6 @@ export default function SliderReport() {
   const lengthExpensesData = expensesData.length;
   const lengthincomeData = incomeData.length;
 
-  useEffect(() => {
-    if(lengthExpensesData > 0) {
-      console.log('Yes data here', expensesData[0].category)
-      console.log(expensesData)
-      // setItem(true);
-      // setSelectedCatName(expensesData[0].category);
-      // setCategoryName('expenses');
-      // setExpensesList(expensesData);
-      // dispatch(addCategoryName(selectedCatName));
-    } 
-    // eslint-disable-next-line
-  }, []);
-
   const handlerToggle = () => {
     setItem(!item);
     if(!item) {
@@ -109,18 +98,22 @@ export default function SliderReport() {
 
   useEffect(() => {
     if (categoryName === 'expenses' && lengthExpensesData === 0) {
-      setExpensesList(expenses);
+      setData(false);
       return;
     }
     if (categoryName === 'income' && lengthincomeData === 0) {
-      setIncomeList(income);
+      setData(false);
       return;
     }
     if (categoryName === 'expenses' && lengthExpensesData > 0) {
+      setSelectedCatName(expensesData[0].category);
       setExpensesList(expensesData);
+      setData(true);
     }
     if (categoryName === 'income' && lengthincomeData > 0) {
+      setSelectedCatName(incomeData[0].category);
       setIncomeList(incomeData);
+      setData(true);
     }
     // eslint-disable-next-line
   }, [categoryName, lengthExpensesData, lengthincomeData]);
@@ -146,7 +139,7 @@ export default function SliderReport() {
         <ArrowCalendRightIcon width="7px" height="10px" onClick={handlerToggle} />
       </div>
 
-      {item && (
+      {item && data && (
         <ul className={s.list}>
           {expensesList.map(({ category, sum }) => (
             <li key={nanoid()} className={s.item} onClick={(e) => handleClick(e, category)}>
@@ -160,7 +153,7 @@ export default function SliderReport() {
           ))}
         </ul>
       )}
-      {!item && (
+      {!item && data && (
         <ul className={s.list}>
           {incomeList.map(({ category, sum }) => (
             <li key={nanoid()} className={s.item} onClick={(e) => handleClick(e, category)}>

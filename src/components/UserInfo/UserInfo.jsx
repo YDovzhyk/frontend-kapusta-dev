@@ -6,6 +6,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { Avatar } from '@mui/material';
 
 import { logOut } from 'redux/auth/auth-operations';
+import { clearTransisions } from 'redux/transaction/transaction-slice';
 import { getUser } from 'redux/auth/auth-selectors';
 
 import Modal from 'components/layout/Modal/Modal';
@@ -39,6 +40,7 @@ export default function UserInfo() {
 
   const handleLogout = () => {
     dispatch(logOut());
+    dispatch(clearTransisions());
   };
 
   return (

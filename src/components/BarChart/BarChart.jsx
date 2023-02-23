@@ -29,7 +29,11 @@ import {
 function Chart() {
   const isMobile = useMediaQuery('(max-width: 767px)');
 
+  const [data, setData] = useState([{name: '', price: 0}]);
+  const [emptyData, setEmptyData] = useState(false);
+
   const dispatch = useDispatch();
+
   const categoryName = useSelector(getCategoryName);
   const currentDate = useSelector(getCurrentDate);
 
@@ -50,16 +54,15 @@ function Chart() {
 
   const chartData = useSelector(getCategoryData);
 
-  const [data, setData] = useState([{name: '', price: 0}]);
-
   useEffect(() => {
-    // eslint-disable-next-line array-callback-return
-    const changeObjFormat = chartData.map(el => {
-      for (const key in el) {
-        return { name: key, price: el[key] };
-      }
-    });
+    if(chartData.length === 0) {
+      setEmptyData(true);
+      return;
+    } else {
+    const changeObjFormat = chartData.map(el => ({name: Object.keys(el)[0], price: Object.values(el)[0]}));
     setData(changeObjFormat);
+    setEmptyData(false);
+    }
   }, [chartData]);
 
   const sorteredData = data.sort((a, b) => b.price - a.price);
@@ -124,7 +127,7 @@ function Chart() {
   if (isMobile) {
     return (
       <div className={s.wrap}>
-        <ResponsiveContainer maxWidth="100%" height={dinamicHight}>
+        {!emptyData && <ResponsiveContainer maxWidth="100%" height={dinamicHight}>
           <BarChart data={sorteredData} layout="vertical" maxBarSize={18}>
             <XAxis type="number" hide axisLine={false} tickLine={false} />
             <YAxis
@@ -157,14 +160,14 @@ function Chart() {
               />
             </Bar>
           </BarChart>
-        </ResponsiveContainer>
+        </ResponsiveContainer>}
       </div>
     );
   }
 
   return (
     <div className={s.wrap}>
-      <ResponsiveContainer width="100%" height={380}>
+      {!emptyData && <ResponsiveContainer width="100%" height={380}>
         <BarChart 
         data={sorteredData}
         margin={{
@@ -200,7 +203,7 @@ function Chart() {
             />
           </Bar>
         </BarChart>
-      </ResponsiveContainer>
+      </ResponsiveContainer>}
     </div>
   );
 }

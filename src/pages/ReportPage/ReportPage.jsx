@@ -38,7 +38,6 @@ export default function ReportPage() {
     dispatch(getReportBalance({ reqDate: currentDate }));
     dispatch(userGetBalance());
     dispatch(getSliderReport({ reqDate: currentDate }));
-
   }, [dispatch, currentDate, isRefresh]);
 
   const balance = useSelector(getBalance);

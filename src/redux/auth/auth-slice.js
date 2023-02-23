@@ -37,6 +37,7 @@ const auth = createSlice({
     },
     clearError: state => {
       state.error = null;
+      state.errorCode = null;
     },
   },
   extraReducers: builder => {
@@ -73,7 +74,7 @@ const auth = createSlice({
       .addCase(logIn.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload.data.message;
-        state.error = payload.status;
+        state.errorCode = payload.status;
       });
 
     // Google LogIn
