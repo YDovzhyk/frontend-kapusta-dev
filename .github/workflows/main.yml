@@ -15,21 +15,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-      - name: Deploy to Docker Hub
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: yuriydovzhyk/frontend-kapusta-local
-      - name: Deploy to Docker Compose
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.PRIVATE_KEY }}
-          port: ${{ secrets.PORT }}
-          script: |
-            cd ~/my-project
-            git pull
-            docker-compose down
-            docker-compose up -d
+      - name: Pull Docker image
+        run: docker pull my-username/frontend_kapusta_dev
+      - name: Run Docker container
+        run: docker run -p 80:80 -d my-username/frontend_kapusta_dev
