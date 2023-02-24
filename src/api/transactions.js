@@ -1,6 +1,6 @@
 import instance from './auth';
 
-// Get transacations by month
+// Get all data by transitions for period + total balance + userinfo + monthly data
 export const axiosGetTransactionsByMonth = async userData => {
   const { data } = await instance.post('api/transitions/timeLine', userData);
   return data;
@@ -12,25 +12,25 @@ export const axiosAddTransaction = async userData => {
   return data;
 };
 
-// Delete transaction
+// Delete transaction by Id
 export const axiosDeleteTransaction = async userData => {
   const { data } = await instance.delete(`api/transitions/delete/${userData}`);
   return data;
 };
 
-// Get expenses transaction by date
+// Get data by expenses + sum income monthly
 export const axiosGetExpensesTransByDate = async userData => {
-  const { data } = await instance.post('api/transitions/expenses/date', userData);
+  const { data } = await instance.post('api/transitions/expenses/data', userData);
   return data;
 };
 
-// Get income transaction by date
+// Get data by income + sum income monthly
 export const axiosGetIncomeTransByDate = async userData => {
-  const { data } = await instance.post('api/transitions/income/date', userData);
+  const { data } = await instance.post('api/transitions/income/data', userData);
   return data;
 };
 
-// Get data by category description
+// Get data by category name for period detail
 export const axiosGetChartData = async userData => {
   const { data } = await instance.post(
     'api/transitions/report/category/detail',
@@ -39,7 +39,7 @@ export const axiosGetChartData = async userData => {
   return data;
 };
 
-// Get data by category income/expenses
+// Get data by category income/expenses for period
 export const axiosGetReportBalance = async userData => {
   const { data } = await instance.post(
     'api/transitions/report/category',
@@ -48,7 +48,7 @@ export const axiosGetReportBalance = async userData => {
   return data;
 };
 
-// Get data by group category
+// Get data income/expenses for period by category name
 export const axiosGetSliderReportData = async userData => {
   const { data } = await instance.post(
     'api/transitions/report/category/data',
