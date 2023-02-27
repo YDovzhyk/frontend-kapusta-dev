@@ -21,3 +21,11 @@ jobs:
         with:
           push: true
           tags: yuriydovzhyk/frontend_kapusta_dev:latest
+      - name: Setup Node.js
+        uses: actions/setup-node@v2.4.1
+        with:
+          node-version: '16.x'
+      - name: Install dependencies
+        run: npm install
+      - name: Start the server
+        run: node app.js
