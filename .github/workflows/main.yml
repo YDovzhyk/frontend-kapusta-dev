@@ -26,5 +26,5 @@ jobs:
           node-version: '16.x'
       - name: Install dependencies
         run: npm install
-      - name: Start the server
-        run: node app.js
+#       - name: Start the server
+#         run: node app.js
