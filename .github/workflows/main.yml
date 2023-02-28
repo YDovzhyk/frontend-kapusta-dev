@@ -34,7 +34,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.TOKEN }}
+          password: ${{ secrets.TOKEN_GITHUB }}
       - name: Push Docker image to GitHub Container Registry
         uses: docker/build-push-action@v3
         with:
