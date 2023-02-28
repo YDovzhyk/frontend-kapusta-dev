@@ -29,7 +29,13 @@ jobs:
           context: .
           push: true
           tags: yuriydovzhyk/frontend_kapusta_dev:latest
-      
+      - name: Deploy container to GitHub
+        uses: docker/deploy-action@v1.2.0
+        with:
+          name: capusta-frontend
+          image: yuriydovzhyk/frontend_kapusta_dev:latest
+          registry: ghcr.io
+          token: ${{ secrets.TOKEN }}
       
       
       
