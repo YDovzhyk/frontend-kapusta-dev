@@ -16,6 +16,7 @@ EXPOSE 3000:8080
 # Команда для запуску проекту
 CMD ["npm", "start"]
 
+
 # comand for terminal:
 # docker build -t frontend-kapusta-local .
 # docker images
