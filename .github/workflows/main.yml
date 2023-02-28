@@ -40,5 +40,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/YDovzhyk/kapusta:latest
+          tags: ghcr.io/ydovzhyk/frontend-kapusta-dev:latest
 
