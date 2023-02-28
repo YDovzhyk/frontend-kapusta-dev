@@ -36,25 +36,3 @@ jobs:
           image: yuriydovzhyk/frontend_kapusta_dev:latest
           registry: ghcr.io
           token: ${{ secrets.TOKEN }}
-      
-      
-      
-#       - name: Login to Docker Hub
-#         uses: docker/login-action@v2
-#         with:
-#           username: ${{ secrets.DOCKERHUB_USERNAME }}
-#           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-#       - name: Build and push image
-#         uses: docker/build-push-action@v3
-#         with:
-#           push: true
-#           tags: yuriydovzhyk/frontend_kapusta_dev:latest
-#       - name: Setup Node.js
-#         uses: actions/setup-node@v3.6.0
-#         with:
-#           node-version: '16.x'
-#       - name: Install dependencies
-#         run: npm install
-        
-#       - name: Start the server
-#         run: node app.js
