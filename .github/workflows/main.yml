@@ -33,6 +33,7 @@ jobs:
           context: .
           push: true
           tags: yuriydovzhyk/frontend-kapusta-dev:latest
+      
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
@@ -40,7 +41,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.TOKEN_GITHUB }}
       - name: Push Docker image to GitHub Container Registry
-
         uses: docker/build-push-action@v3
         with:
           context: .
@@ -58,22 +58,23 @@ jobs:
           git fetch
           git checkout gh-pages
           git reset --hard origin/gh-pages
-      
-      - name: Create dist directory
-        run: |
-          rm -rf dist
-          mkdir dist
-
-#       - name: Copy built files
-#         run: cp -r build/. dist/
-
-      - name: Configure git
-        run: |
-          git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-         
-      # - name: Deploy to GitHub Pages
-      #   uses: JamesIves/github-pages-deploy-action@4.1.2
-      #   with:
-      #     branch: gh-pages
-      #     folder: dist
+          
+        needs: build-and-push
+          steps:
+        - name: Login to GitHub Package Registry
+          uses: docker/login-action@v2
+          with:
+            registry: ghcr.io
+            username: ${{ github.actor }}
+            password: ${{ secrets.TOKEN_GITHUB }}
+        - name: Pull Docker image from GitHub Package Registry
+          run: docker pull ghcr.io/${{ github.repository_owner }}/frontend-kapusta-dev:latest
+        - name: Login to GitHub Pages
+          uses: JamesIves/github-pages-deploy-action@4.1.2
+          with:
+            branch: gh-pages
+            folder: build
+            token: ${{ secrets.TOKEN_GITHUB }}
+        - name: Deploy Docker image to GitHub Pages
+          run: |
+            docker run -d -p 3000:3000 ghcr.io/${{ github.repository_owner }}/frontend-kapusta-dev:latest
