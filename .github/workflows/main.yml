@@ -52,10 +52,13 @@ jobs:
           ref: gh-pages
 
       - name: Copy built files
-        run: |
-        mkdir -p dist
-        cp -r build/* dist/
-        working-directory: ./dist
+          run: cp -R build/* dist/ && echo 'Files copied successfully'
+          working-directory: ./frontend-kapusta-dev
+          shell: bash
+      - name: Create dist directory
+          run: mkdir --parents dist
+          working-directory: ./frontend-kapusta-dev
+          shell: bash
 
       - name: Configure git
         run: |
