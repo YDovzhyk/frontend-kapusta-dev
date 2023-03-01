@@ -53,14 +53,14 @@ jobs:
 
       - name: Copy built files
         run: |
-        mkdir -p dist
-        cp -r build/* dist/
+          mkdir -p dist
+          cp -r build/* dist/
         working-directory: ./dist
 
       - name: Configure git
         run: |
-        git config --global user.name "${{ github.actor }}"
-        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v4
