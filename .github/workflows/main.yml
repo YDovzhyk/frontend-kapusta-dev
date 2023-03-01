@@ -71,18 +71,9 @@ jobs:
         run: |
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-
-      - name: Commit and push changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "Deploy changes"
-          commit_options: "--no-verify"
-          branch: gh-pages
-          repository: ${{ github.repository }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          
+         
       # - name: Deploy to GitHub Pages
       #   uses: JamesIves/github-pages-deploy-action@4.1.2
       #   with:
       #     branch: gh-pages
-      #     folder: build
+      #     folder: dist
