@@ -46,11 +46,18 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/frontend-kapusta-dev:latest
+          
       - name: Checkout branch
         uses: actions/checkout@v2
         with:
-          ref: gh-pages
-
+          ref: gh-pages 
+      - name: Clear gh-pages branch
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git fetch
+          git checkout gh-pages
+          git reset --hard origin/gh-pages
       - name: Copy built files
         run: cp -R build/* dist/ && echo 'Files copied successfully'
         working-directory: ./frontend-kapusta-dev
