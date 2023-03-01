@@ -52,29 +52,4 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/frontend-kapusta-dev:latest
-        env:
-          DOCKER_USERNAME: ${{ github.actor }}
-          DOCKER_PASSWORD: ${{ secrets.TOKEN_GITHUB }}
-      
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.TOKEN_GITHUB }}
-          publish_dir: ./build
-          force_orphan: true
-          clean: true
-          commit_message: "Deploy to GitHub Pages"
-    
-      - name: Deploy Docker image to the cloud
-        if: github.ref == 'refs/heads/main'
-        uses: docker/compose-cli-action@v0.1.1
-        with:
-          login: true
-          compose-version: '1.29.2'
-        env:
-          DOCKER_HOST: ssh://remote-server
-          DOCKER_CLI_EXPERIMENTAL: enabled
-          DOCKER_USERNAME: ${{ secrets.REMOTE_DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.REMOTE_DOCKER_PASSWORD }}
-          run: |
-            docker compose -f docker-compose.prod.yml up -d --remove-orphans
+          
