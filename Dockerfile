@@ -11,7 +11,7 @@ COPY . .
 RUN npm install
 
 # Використовуємо порт 3000
-EXPOSE 3000
+EXPOSE 8080:3000
 
 # Команда для запуску проекту
 CMD ["npm", "start"]
