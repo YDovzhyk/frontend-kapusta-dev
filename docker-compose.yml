@@ -2,6 +2,6 @@ version: '3'
 
 services:
   app:
-    image: yuriydovzhyk/frontend-kapusta-dev
+    image: yuriydovzhyk/frontend-kapusta
     ports:
       - "8080:3000"
