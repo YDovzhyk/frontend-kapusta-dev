@@ -40,11 +40,36 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.TOKEN_GITHUB }}
       - name: Push Docker image to GitHub Container Registry
+
         uses: docker/build-push-action@v3
         with:
           context: .
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/frontend-kapusta-dev:latest
+      - name: Checkout branch
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+
+      - name: Copy built files
+        run: |
+        mkdir -p dist
+        cp -r build/* dist/
+        working-directory: ./dist
+
+      - name: Configure git
+        run: |
+        git config --global user.name "${{ github.actor }}"
+        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Deploy changes"
+          commit_options: "--no-verify"
+          branch: gh-pages
+          repository: ${{ github.repository }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           
       # - name: Deploy to GitHub Pages
       #   uses: JamesIves/github-pages-deploy-action@4.1.2
