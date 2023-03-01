@@ -58,14 +58,14 @@ jobs:
           git fetch
           git checkout gh-pages
           git reset --hard origin/gh-pages
-      - name: Copy built files
-        run: cp -R build/* dist/ && echo 'Files copied successfully'
-        working-directory: ./frontend-kapusta-dev
-        shell: bash
+      
       - name: Create dist directory
-        run: mkdir --parents dist
-        working-directory: ./frontend-kapusta-dev
-        shell: bash
+        run: |
+          rm -rf dist
+          mkdir dist
+
+      - name: Copy built files
+        run: cp -r build/. dist/
 
       - name: Configure git
         run: |
