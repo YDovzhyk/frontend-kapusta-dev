@@ -17,6 +17,7 @@ EXPOSE 8080:3000
 CMD ["npm", "start"]
 
 
+
 # comand for terminal:
 # docker build -t frontend-kapusta-local .
 # docker images
