@@ -16,6 +16,13 @@ const SupportPage = lazy(() => import('pages/SupportPage/SupportPage'));
 const TermsPage = lazy(() => import('pages/TermsPage/TermsPage'));
 const NotFoundPage = lazy(() => import('pages/NotFoundPage/NotFoundPage'));
 
+// const production = "https://kapusta-server.herokuapp.com";
+//     const development = "http://localhost:4000";
+//     const url =
+//       process.env.NODE_ENV === "development" ? development : production;
+
+      console.log(process.env)
+
 export default function UserRoutes() {
   return (
     <Suspense fallback={null}>
