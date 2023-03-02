@@ -22,8 +22,9 @@ jobs:
         
       - name: Update package.json for GitHub Pages
         run: |
-          echo "$(jq '.homepage = "https://ydovzhyk.github.io/frontend-kapusta-dev/"' package.json)" > package.json
-        working-directory: ./build
+          mkdir ./build
+          echo "$(jq '.homepage = "https://ydovzhyk.github.io/frontend-kapusta-dev/"' package.json)" > ./build/package.json
+        working-directory: .
         
       - name: Build the application
         run: npm run build
