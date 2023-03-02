@@ -28,7 +28,9 @@ if(process.env.NODE_ENV === "production") {
 </HashRouter>
 // </React.StrictMode>
   );
-} else {
+} 
+
+if(process.env.NODE_ENV === "development") {
   root.render(
     // <React.StrictMode>
   <BrowserRouter>
@@ -42,18 +44,3 @@ if(process.env.NODE_ENV === "production") {
 // </React.StrictMode>
   );
 }
-
-// root.render(
-//     // <React.StrictMode>
-//   <HashRouter>
-//   <Provider store={store}>
-//     <PersistGate loading={null} persistor={persistedStore}>
-//       <ScrollToTop />
-//       <App />
-//     </PersistGate>
-//   </Provider>
-// </HashRouter>
-// // </React.StrictMode>
-
-  
-// );
