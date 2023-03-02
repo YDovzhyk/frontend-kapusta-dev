@@ -20,8 +20,8 @@ jobs:
       - name: Install dependencies
         run: npm install
         
-#       - name: Build the application
-#         run: npm run build
+      - name: Build the application
+        run: npm run build
         
       - name: Build Docker image
         run: docker build -t yuriydovzhyk/frontend-kapusta-dev:latest .
