@@ -1,7 +1,6 @@
 {
   "name": "kapusta",
   "version": "0.1.0",
-  "homepage": "https://ydovzhyk.github.io/frontend-kapusta-dev/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -58,5 +57,10 @@
   "devDependencies": {
     "eslint": "^8.29.0",
     "prettier": "^2.8.0"
+  },
+  "config": {
+    "prod": {
+      "homepage": "https://ydovzhyk.github.io/frontend-kapusta-dev/"
+    }
   }
 }
