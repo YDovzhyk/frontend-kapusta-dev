@@ -25,8 +25,8 @@ jobs:
         
       - name: Update package.json for GitHub Pages
         run: |
-          echo '{"homepage": "https://ydovzhyk.github.io/frontend-kapusta-dev/"}' > ./build/package.json
-        working-directory: .
+          echo "$(jq '.homepage = "https://ydovzhyk.github.io/frontend-kapusta-dev/"' package.json)" > package.json
+        working-directory: ./build
         
       - name: Build Docker image
         run: docker build -t yuriydovzhyk/frontend-kapusta-dev:latest .
