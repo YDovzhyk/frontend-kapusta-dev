@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { HashRouter } from 'react-router-dom';
+import { HashRouter, BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistedStore, store } from 'redux/store';
@@ -28,7 +28,7 @@ useEffect(() => {
 }, [process.env.NODE_ENV])
 
 if(buildVertion) {
-  return root.render(
+  root.render(
     // <React.StrictMode>
   <HashRouter>
   <Provider store={store}>
@@ -41,16 +41,16 @@ if(buildVertion) {
 // </React.StrictMode>
   );
 } else {
-  return root.render(
+  root.render(
     // <React.StrictMode>
-  <HashRouter>
+  <BrowserRouter>
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistedStore}>
       <ScrollToTop />
       <App />
     </PersistGate>
   </Provider>
-</HashRouter>
+</BrowserRouter>
 // </React.StrictMode>
   );
 }
