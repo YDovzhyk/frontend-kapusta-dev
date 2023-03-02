@@ -20,6 +20,11 @@ jobs:
       - name: Install dependencies
         run: npm install
         
+      - name: Update package.json for GitHub Pages
+        run: |
+          echo '{"homepage": "https://ydovzhyk.github.io/frontend-kapusta-dev/"}' > ./build/package.json
+        working-directory: .
+        
       - name: Build the application
         run: npm run build
         
