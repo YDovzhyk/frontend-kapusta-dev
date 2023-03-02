@@ -53,11 +53,11 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/frontend-kapusta-dev:latest
           
-#       - name: Deploy to GitHub Pages
-#         uses: JamesIves/github-pages-deploy-action@4.1.2
-#         env:
-#           ACCESS_TOKEN: ${{ secrets.TOKEN_GITHUB }}
-#         with:
-#           branch: gh-pages
-#           folder: ./build
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.2
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        with:
+          branch: gh-pages
+          folder: ./build
 #           token: ${{ secrets.GITHUB_TOKEN }}
