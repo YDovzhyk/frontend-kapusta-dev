@@ -21,7 +21,7 @@ const NotFoundPage = lazy(() => import('pages/NotFoundPage/NotFoundPage'));
 //     const url =
 //       process.env.NODE_ENV === "development" ? development : production;
 
-      console.log(process.env)
+      
 
 export default function UserRoutes() {
   return (
