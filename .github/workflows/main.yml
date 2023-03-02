@@ -23,6 +23,11 @@ jobs:
       - name: Build the application
         run: npm run build
         
+      - name: Update package.json for GitHub Pages
+        run: |
+          echo '{"homepage": "https://ydovzhyk.github.io/frontend-kapusta-dev/"}' > ./build/package.json
+        working-directory: .
+        
       - name: Build Docker image
         run: docker build -t yuriydovzhyk/frontend-kapusta-dev:latest .
         
