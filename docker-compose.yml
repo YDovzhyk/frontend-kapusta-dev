@@ -4,4 +4,4 @@ services:
   app:
     image: yuriydovzhyk/frontend-kapusta
     ports:
-      - "8080:3000"
+      - "3000:3000"

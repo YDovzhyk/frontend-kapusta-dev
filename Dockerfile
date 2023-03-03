@@ -11,7 +11,7 @@ COPY . .
 RUN npm install
 
 # Використовуємо порт 3000
-EXPOSE 8080:3000
+EXPOSE 3000:3000
 
 # Команда для запуску проекту
 CMD ["npm", "start"]
@@ -21,6 +21,6 @@ CMD ["npm", "start"]
 # comand for terminal:
 # docker build -t frontend-kapusta-local .
 # docker images
-# docker run -d -p 8080:3000 a26223b57f4c //start container running at port 8080 in browser
+# docker run -d -p 3000:3000 a26223b57f4c //start container running at port 8080 in browser
 # docker ps // show all container
 # docker stop id // id - container
