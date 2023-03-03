@@ -17,10 +17,9 @@ EXPOSE 3000:3000
 CMD ["npm", "start"]
 
 
-
 # comand for terminal:
 # docker build -t frontend-kapusta-local .
 # docker images
-# docker run -d -p 3000:3000 a26223b57f4c //start container running at port 8080 in browser
+# docker run -d -p 3000:3000 a26223b57f4c //start container running at port 3000 in browser
 # docker ps // show all container
 # docker stop id // id - container
