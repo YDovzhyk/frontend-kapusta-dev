@@ -17,7 +17,6 @@ const root = createRoot(container);
 
 if(process.env.NODE_ENV === "production") {
   root.render(
-    // <React.StrictMode>
   <HashRouter>
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistedStore}>
@@ -26,13 +25,11 @@ if(process.env.NODE_ENV === "production") {
     </PersistGate>
   </Provider>
 </HashRouter>
-// </React.StrictMode>
   );
 } 
 
 if(process.env.NODE_ENV === "development") {
   root.render(
-    // <React.StrictMode>
   <BrowserRouter>
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistedStore}>
@@ -41,6 +38,5 @@ if(process.env.NODE_ENV === "development") {
     </PersistGate>
   </Provider>
 </BrowserRouter>
-// </React.StrictMode>
   );
 }
