@@ -25,8 +25,6 @@ export default function FormLogin() {
     /* global google */
     google.accounts.id.initialize({
       client_id: clientId,
-        // '626323858136-ebsgebl9r3vfj0okcknk20nspcl33qir.apps.googleusercontent.com',
-        // '160834485099-gokn0fab6bj7qdmo42gdgp116u78c1dt.apps.googleusercontent.com',
       callback: handleCallbackResponse,
     });
 
