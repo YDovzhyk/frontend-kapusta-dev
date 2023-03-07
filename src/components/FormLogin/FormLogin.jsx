@@ -17,11 +17,15 @@ import Button from 'components/ui/Button/Button';
 export default function FormLogin() {
   const dispatch = useDispatch();
 
+  const clientId = process.env.NODE_ENV === 'production' 
+  ? '626323858136-ebsgebl9r3vfj0okcknk20nspcl33qir.apps.googleusercontent.com'
+  : '160834485099-gokn0fab6bj7qdmo42gdgp116u78c1dt.apps.googleusercontent.com';
+
   useEffect(() => {
     /* global google */
     google.accounts.id.initialize({
-      client_id:
-        '626323858136-ebsgebl9r3vfj0okcknk20nspcl33qir.apps.googleusercontent.com',
+      client_id: clientId,
+        // '626323858136-ebsgebl9r3vfj0okcknk20nspcl33qir.apps.googleusercontent.com',
         // '160834485099-gokn0fab6bj7qdmo42gdgp116u78c1dt.apps.googleusercontent.com',
       callback: handleCallbackResponse,
     });
@@ -38,7 +42,7 @@ export default function FormLogin() {
     }
 
     dispatch(clearError());
-  }, [dispatch]);
+  }, [dispatch, clientId]);
 
   const getClassName = ({ isActive }) => {
     return isActive ? `${s.link} ${s.active}` : s.link;
