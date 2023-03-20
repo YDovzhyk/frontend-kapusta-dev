@@ -10,13 +10,26 @@ export default function BalanceChart() {
   const reportBalance = useSelector(getReportBalance);
 
   const getData = (data) => {
-    if(reportBalance.length > 0 && data === "expenses") {
-      return '- ' + reportBalance[0].expenses + ' UAH';
-    } 
-    if(reportBalance.length > 0 && data === "income") {
-      return '+ ' + reportBalance[1].income + ' UAH';
-    } else {
+    if (reportBalance.length === 0) {
       return 0 + ' UAH';
+    }
+    if (reportBalance.length === 1 && Object.keys(reportBalance[0])[0] === "expenses" && data === "expenses") {
+      return '- ' + reportBalance[0].expenses + ' UAH';
+    }
+    if (reportBalance.length === 1 && Object.keys(reportBalance[0])[0] === "expenses" && data === "income") {
+      return 0 + ' UAH';
+    }
+    if (reportBalance.length === 1 && Object.keys(reportBalance[0])[0] === "income" && data === "income") {
+      return '- ' + reportBalance[0].income + ' UAH';
+    }
+    if (reportBalance.length === 1 && Object.keys(reportBalance[0])[0] === "income" && data === "expenses") {
+      return 0 + ' UAH';
+    }
+    if (reportBalance.length === 2 && data === "expenses") {
+      return '- ' + reportBalance[0].expenses  + ' UAH';
+    }
+    if (reportBalance.length === 2 && data === "income") {
+      return '- ' + reportBalance[1].income  + ' UAH';
     }
   };
   
