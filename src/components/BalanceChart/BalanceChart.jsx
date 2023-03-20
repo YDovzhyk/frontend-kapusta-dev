@@ -20,7 +20,7 @@ export default function BalanceChart() {
       return 0 + ' UAH';
     }
     if (reportBalance.length === 1 && Object.keys(reportBalance[0])[0] === "income" && data === "income") {
-      return '- ' + reportBalance[0].income + ' UAH';
+      return '+ ' + reportBalance[0].income + ' UAH';
     }
     if (reportBalance.length === 1 && Object.keys(reportBalance[0])[0] === "income" && data === "expenses") {
       return 0 + ' UAH';
@@ -29,7 +29,7 @@ export default function BalanceChart() {
       return '- ' + reportBalance[0].expenses  + ' UAH';
     }
     if (reportBalance.length === 2 && data === "income") {
-      return '- ' + reportBalance[1].income  + ' UAH';
+      return '+ ' + reportBalance[1].income  + ' UAH';
     }
   };
   
